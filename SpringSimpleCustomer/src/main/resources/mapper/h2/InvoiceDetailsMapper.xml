@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.repository.InvoiceDetailsMapper">
+	<!-- merchandise registration -->
+	<insert id="insertOne">
+		INSERT INTO invoice_details (
+			customer_id
+		  , merchandise_id
+		  , inDate
+		  , amount_invoice
+		  , total_money
+		) VALUES (
+			#{customerId},
+			#{merchandiseId},
+			#{inDate},
+			#{amountInvoice},
+			#{totalMoney}
+		)
+	</insert>
+	<select id="findMany" resultType="InvoiceDetails">
+		select * 
+		from invoice_details
+		<where>
+			<if test="invoiceDetailsId !=null">
+			invoice_details_id like '%'|| #{invoiceDetailsId} ||'%'
+			</if>
+			<if test="customerId !=null">
+			customer_id like '%'|| #{customerId} ||'%'
+			</if>
+		</where>
+	</select>
+	<!--Mapping definition (merchandise) -->
+	<resultMap type="com.example.domain.user.model.InvoiceDetails" id="invoice_details">
+		<id column="invoice_details_id" property="invoiceDetailsId" />
+		<result column="customer_id" property="customerId" />
+		<result column="merchandise_id" property="merchandiseId" />
+		<result column="inDate" property="inDate" />
+		<result column="amount_invoice" property="amountInvoice" />
+		<result column="total_money" property="totalMoney" />
+
+	</resultMap>
+	<!-- Get user(1 record) -->
+	<select id="findOne" resultMap="invoice_details">
+		select invoice_details_id
+			, customer_id
+			, merchandise_id
+			, inDate
+			, amount_invoice
+			, total_money
+		from invoice_details
+		where
+			invoice_details_id = #{invoiceDetailsId}
+	</select>
+	<!-- Get user(1 record) -->
+	<select id="getInvoiceDetails" resultType="InvoiceDetails">
+		select * from invoice_details
+	</select>
+	<select id="getMerchandises" resultType="Merchandise">
+		select * from merchandise
+	</select>
+	<select id="findByMerchandise" resultType="InvoiceDetails">
+		select 
+			inv.customer_id,
+			inv.merchandise_id,
+			inv.inDate,
+			inv.amount_invoice,
+			inv.total_money
+		from merchandise mer, invoice_details inv
+		where inv.merchandise_id = mer.merchandise_id
+			and mer.merchandise_id = #{merchandiseId}
+	</select>
+	<!-- Update merchandise -->
+	<update id ="updateOne" >
+		update invoice_details
+		set 
+			customer_id = #{customerId}, 
+			merchandise_id = #{merchandiseId},
+			inDate = #{inDate},
+			amount_invoice = #{amountInvoice},
+			total_money = #{totalMoney}
+		where invoice_details_id = #{invoiceDetailsId}
+	</update>
+	<!-- Delete merchandise -->
+	<delete id ="deleteOne" >
+	delete from invoice_details
+	where invoice_details_id = #{invoiceDetailsId}
+	</delete>
+</mapper>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+</head>
+<body>
+	<div layout:fragment="menu" class="bg-light">
+		<ul class="nav nav-pills nav-stacked flex-column">
+			<li role="presentation">
+				<a class="nav-link h5" th:href="@{/user/signup}" th:text="#{addUserList}"></a>
+			</li>
+			<li role="presentation" class="border-bottom">
+				<a class="nav-link h5" th:href="@{/user/list}" th:text="#{userList}"></a>
+			</li>
+			<li role="presentation">
+				<a class="nav-link h5" th:href="@{/customer/add}" th:text="#{addCustomer}"></a>
+			</li>
+			<li role="presentation">
+				<a class="nav-link h5" th:href="@{/customer/list}" th:text="#{customerList}"></a>
+			</li>
+			<li role="presentation" class="border-bottom">
+				<a class="nav-link h5" th:href="@{/customer/search}" th:text="#{customerSearch}"></a>
+			</li>
+			<li role="presentation">
+				<a class="nav-link h5" th:href="@{/merchandise/add}" th:text="#{addMerchandise}"></a>
+			</li>
+			<li role="presentation">
+				<a class="nav-link h5" th:href="@{/merchandise/list}" th:text="#{merchandiseList}"></a>
+			</li>
+			<li role="presentation" class="border-bottom">
+				<a class="nav-link h5" th:href="@{/merchandise/search}" th:text="#{merchandiseSearch}"></a>
+			</li>
+			<li role="presentation">
+				<a class="nav-link h5" th:href="@{/invoiceDetails/add}" th:text="#{addInvoiceDetails}"></a>
+			</li>
+			<li role="presentation">
+				<a class="nav-link h5" th:href="@{/invoiceDetails/list}" th:text="#{invoiceDetailsList}"></a>
+			</li>
+			<li role="presentation" class="border-bottom">
+				<a class="nav-link h5" th:href="@{/invoiceDetails/search}" th:text="#{invoiceDetailsSearch}"></a>
+			</li>
+			<li role="presentation" sec:authorize="hasRole('ADMIN')">
+				<a class="nav-link h5" th:href="@{/admin}" >Admin only</a>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

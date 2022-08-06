@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+	<!-- Read Dedicated CSS -->
+	<link rel="stylesheet" th:href="@{/css/user/list.css}">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css"></link>
+	<title th:text="#{invoiceDetailsList}"></title>
+	
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="header border-bottom">
+			<h1 class="h2" th:text="#{createInvoiceDetails}"></h1>
+		</div>
+		<form id="signup-form" method="post" action="/invoiceDetails/add" class="form-signup bg-info p-3" 
+		th:object = "${signupInvoiceDetailsForm}">
+			<h1 class="text-center text-warning" th:text="#{createInvoiceDetails}"></h1>
+			<!-- Customer Id -->
+			<div class="form-group">
+				<label for="customerId" th:text="#{customerId}"></label>
+				<input type="number" class="form-control" th:field="*{customerId}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:errors="*{customerId}"></div>
+			</div>
+			<!-- Merchandise Id -->
+			<div class="form-group">
+				<label for="merchandiseId" th:text="#{merchandiseId}"></label>
+				<input type="number" class="form-control" th:field="*{merchandiseId}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:errors="*{merchandiseId}"></div>
+			</div>
+			<!-- In Date -->
+			<div class="form-group">
+				<label for="inDate" th:text="#{inDate}"></label>
+				<input type="text" class="form-control" th:field="*{inDate}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:errors="*{inDate}"></div>
+			</div>
+			<!-- Amount -->
+			<div class="form-group">
+				<label for="amountInvoice" th:text="#{amountInvoice}"></label>
+				<input type="number" class="form-control" th:field="*{amountInvoice}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:errors="*{amountInvoice}"></div>
+			</div>
+			<!-- Total Money -->
+			<div class="form-group">
+				<label for="totalMoney" th:text="#{totalMoney}"></label>
+				<input type="number" class="form-control" th:field="*{totalMoney}" th:errorclass="is-invalid"/>
+				<div class="invalid-feedback" th:errors="*{totalMoney}"></div>
+			</div>
+			<!-- Signup button -->
+			<input type="submit" th:value="#{user.signup.btn}" class="btn btn-primary w-100 mt-3" />
+			<input type ='hidden' th:name ="${_csrf.parameterName}" th:value ="${_csrf.token}" />
+		</form>
+	</div>
+</body>
+</html>

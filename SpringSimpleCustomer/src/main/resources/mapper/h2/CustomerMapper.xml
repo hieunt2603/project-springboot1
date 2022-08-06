@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.repository.CustomerMapper">
+	<!-- customer registration -->
+	<insert id="insertOne">
+		INSERT INTO customer (
+			customer_name
+		  , phone
+		  , identity
+		  , user_id
+		) VALUES (
+			#{customerName},
+			#{phone},
+			#{identity},
+			#{userId}
+		)
+	</insert>
+	<select id="findMany" resultType="Customer">
+		select * 
+		from customer
+		<where>
+			<if test="customerId !=null">
+			customer_id like '%'|| #{customerId} ||'%'
+			</if>
+			<if test="customerName !=null">
+			and customer_name like '%'|| #{customerName} ||'%'
+			</if>
+		</where>
+	</select>
+	<!--Mapping definition (customer) -->
+	<resultMap type="com.example.domain.user.model.Customer" id="customer">
+		<id column="customer_id" property="customerId" />
+		<result column="customer_name" property="customerName" />
+		<result column="phone" property="phone" />
+		<result column="identity" property="identity" />
+		<result column="user_id" property="userId" />
+
+	</resultMap>
+	<!-- Get user(1 record) -->
+	<select id="findOne" resultMap="customer">
+		select customer_id,customer_name,phone,identity,user_id
+		from customer
+		where
+			customer_id = #{customerId}
+	</select>
+	<select id="getCustomers" resultType="Customer">
+		select * from customer
+	</select>
+	<select id="getUsers" resultType="MUser">
+		select * from m_user
+	</select>
+	<select id="findByUser" resultType="Customer">
+		select 
+			cus.customer_name,
+			cus.phone,
+			cus.identity,
+			cus.user_id
+		from m_user use, customer cus
+		where cus.user_id = use.user_id
+			and use.user_id = #{userId}
+	</select>
+	<!-- Update customer -->
+	<update id ="updateOne" >
+		update customer
+		set 
+			customer_name = #{customerName}, 
+			phone = #{phone},
+			identity = #{identity},
+			user_id = #{userId}
+		where customer_id = #{customerId}
+	</update>
+	<!-- Delete customer -->
+	<delete id ="deleteOne" >
+	delete from customer
+	where customer_id = #{customerId}
+	</delete>
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.repository.MerchandiseMapper">
+	<!-- merchandise registration -->
+	<insert id="insertOne">
+		INSERT INTO merchandise (
+			merchandise_name
+		  , amount
+		  , money
+		) VALUES (
+			#{merchandiseName},
+			#{amount},
+			#{money}
+		)
+	</insert>
+	<select id="findMany" resultType="Merchandise">
+		select * 
+		from merchandise
+		<where>
+			<if test="merchandiseId !=null">
+			merchandise_id like '%'|| #{merchandiseId} ||'%'
+			</if>
+			<if test="merchandiseName !=null">
+			and merchandise_name like '%'|| #{merchandiseName} ||'%'
+			</if>
+		</where>
+	</select>
+	<!--Mapping definition (merchandise) -->
+	<resultMap type="com.example.domain.user.model.Merchandise" id="merchandise">
+		<id column="merchandise_id" property="merchandiseId" />
+		<result column="merchandise_name" property="merchandiseName" />
+		<result column="amount" property="amount" />
+		<result column="money" property="money" />
+
+	</resultMap>
+	<!-- Get user(1 record) -->
+	<select id="findOne" resultMap="merchandise">
+		select merchandise_id,merchandise_name,amount,money
+		from merchandise
+		where
+			merchandise_id = #{merchandiseId}
+	</select>
+	<!-- Get user(1 record) -->
+	<select id="getMerchandises" resultType="Merchandise">
+		select * from merchandise
+	</select>
+	<select id="findByMerchandise" resultType="Merchandise">
+		select 
+			mer.merchandise_name,
+			mer.amount,
+			mer.money
+		from merchandise mer
+		where mer.merchandise_id = #{merchandiseId}
+	</select>
+	<!-- Update merchandise -->
+	<update id ="updateOne" >
+		update merchandise
+		set 
+			merchandise_name = #{merchandiseName} , 
+			amount = #{amount},
+			money = #{money}
+		where merchandise_id = #{merchandiseId}
+	</update>
+	<!-- Delete merchandise -->
+	<delete id ="deleteOne" >
+	delete from merchandise
+	where merchandise_id = #{merchandiseId}
+	</delete>
+</mapper>

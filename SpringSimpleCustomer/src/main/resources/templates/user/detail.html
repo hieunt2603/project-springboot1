@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<title>User Details</title>
+<!-- Read CSS -->
+<link rel="stylesheet" th:href="@{/css/user/list.css}">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css"></link>
+<script  th:src="@{/js/user/detail.js}" defer></script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="header border-bottom">
+			<h1 class="h2" th:text="#{userDetails}"></h1>
+		</div>
+		<form id="user-detail-form" method="post" class="form-signup"
+			th:action="@{/user/detail}" th:object="${userDetailForm}">
+			<input type="hidden" th:field="*{userId}">
+			<!-- User Details information -->
+			<table class="table table-striped table-bordered table-hover">
+				<tbody>
+					<tr>
+						<th class="w-25" th:text="#{userId}"></th>
+						<td th:text="*{userId}"></td>
+					</tr>
+					<tr>
+						<th th:text="#{password}"></th>
+						<td><input type="text" class="form-control" th:field="*{password}" /></td>
+					</tr>
+					<tr>
+						<th th:text="#{userName}"></th>
+						<td><input type="text" class="form-control" th:field="*{userName}" /></td>
+					</tr>
+					<tr>
+						<th th:text="#{birthday}"></th>
+						<td th:text="*{#dates.format(birthday, 'dd/MM/YYYY')}"></td>
+					</tr>
+					<tr>
+						<th th:text="#{age}"></th>
+						<td th:text="*{age}"></td>
+					</tr>
+					<tr>
+						<th th:text="#{gender}"></th>
+						<td th:text="*{gender == 1 ? 'Male': 'Female'}"></td>
+					</tr>
+					<tr>
+						<th th:text="#{department}"></th>
+						<td >
+							<span th:if="*{department !=null}" th:text="*{department.departmentName}">
+							</span>
+						</td>
+					</tr>					
+				</tbody>
+			</table>
+			<div class="text-center">
+				<button class="btn btn-danger" type="submit" name ="delete"><strong th:text="#{delete}"></strong> <i class="fa fa-trash"></i></button>
+				<button class="btn btn-primary" type="submit" name ="update"><strong th:text="#{update}"></strong> <i class="fa fa-pencil-square-o"></i></button>
+			</div>
+			<!-- Salary information -->
+			<th:block th:if="*{salaryList !=null and salaryList.size() >0}">
+				<div class="header border-bottom">
+					<h1 class="h2">Salary</h1>
+				</div>
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th class="w-25">Year Month</th>
+							<th>Salary</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each = "item: *{salaryList}">
+							<td th:text="${item.yearMonth}"></td>
+							<td th:text ="${item.salary}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</th:block>
+		</form>
+	</div>
+</body>
+</html>

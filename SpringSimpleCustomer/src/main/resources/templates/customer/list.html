@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+	<!-- Read Dedicated CSS -->
+	<link rel="stylesheet" th:href="@{/css/user/list.css}">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css"></link>
+	<title th:text="#{customerList}"></title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="header border-bottom">
+			<h1 class="h2" th:text="#{customerList}"></h1>
+		</div>
+		
+		<div class="mb-4">
+			<form id="user-search-form" method="post" th:action="@{/customer/list}"
+			class="form-inline" th:object="${customerListForm}">
+				<div class="form-group">
+					<label for="customerId" class="mr-2" th:text="#{customerId}"> Customer ID</label> <input
+					type="number" class="form-control" th:field="*{customerId}" />
+				</div>
+				<div class="form-group mx-sm-3">
+					<label for="customerName" class="mr-2" th:text="#{customerName}"> Customer Name</label> <input
+					type="text" class="form-control" th:field="*{customerName}" />
+				</div>
+				<button class="btn btn-primary mr-2" type="submit"><i class="fa fa-search"></i></button>
+				<a th:href="@{/customer/add}" class="btn btn-success"><i class="fa fa-plus"></i> Add</a>
+			</form>
+		</div>
+		
+		
+		<div>
+			<table 
+			class="table table-striped table-bordered table-hover">
+				<thead class="thead-light">
+					<tr>
+					<th class="th-width" th:text="#{customerId}"></th>
+					<th class="th-width" th:text="#{customerName}"></th>
+					<th class="th-width" th:text="#{phone}"></th>
+					<th class="th-width" th:text="#{identity}"></th>
+					<th class="th-width" th:text="#{manager}"></th>
+					<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item,state: ${customerList}">
+						<td th:text="${state.count}"></td>
+						<td th:text="${item.customerName}"></td>
+						<td th:text="${item.phone}" ></td>
+						<td th:text="${item.identity}"></td>
+						<td th:text="${item.userId}" ></td>
+						<td><a class="btn btn-primary" th:href="@{'/customer/detail/'+${item.customerId}}">Detail <i class="fa fa-edit"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

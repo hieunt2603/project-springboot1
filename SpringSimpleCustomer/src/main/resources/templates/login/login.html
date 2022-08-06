@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-tofit=no">
+	<!-- Read CSS -->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/user/login.css}">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/webjars/font-awesome/css/font-awesome.min.css"></link>
+	<!-- Read JS -->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	<title>Login</title>
+</head>
+<body class="bg-success">
+	<div class="text-center pt-5">
+		<form method="post" th:action="@{/login}" class="form-login bg-info centered">
+			<h2 class="text-warning"><i class="fa fa-sign-in"></i> Login</h2>
+			<p th:if ="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null"
+			th:text ="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
+			class ="text-danger" />
+			<p/>
+			
+			<!-- User ID -->
+			<div class="form-group">
+				<label for="userId" class="sr-only" th:text="#{userId}"></label>
+				<input type="text" class="form-control" placeholder="User ID" name="userId"/>
+			</div>
+			<!-- Password -->
+			<div class="form-group">
+				<label for="password" class="sr-only" th:text="#{password}"></label>
+				<input type="password" class="form-control" placeholder="Password" name="password"/>
+			</div>
+			<input type="submit" value="Login" class="btn btn-primary mb-2" />
+			<div></div>
+			<a th:href="@{/user/signup}" class="btn btn-primary" >Create new account</a>
+		</form>
+	</div>
+</body>
+</html>
